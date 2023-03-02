@@ -8,6 +8,12 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    @State private var playerCard = "back"
+    @State private var cpuCard = "back"
+    @State private var playerScore = 0
+    @State private var cpuScore = 0
+    
     var body: some View {
         ZStack {
             Image("background")
@@ -22,15 +28,30 @@ struct ContentView: View {
                 
                 HStack{
                     Spacer()
-                    Image("card3")
+                    Image(playerCard)
                     Spacer()
-                    Image("card4")
+                    Image(cpuCard)
                     Spacer()
                 }
                 
                 Spacer()
                 
-                Image("dealbutton")
+                Button(action: {
+                    
+                    var playerRand = Int.random(in: 2...14)
+                    var cpuRand = Int.random(in: 2...14)
+                    
+                    playerCard = "card" + String(playerRand)
+                    cpuCard = "card" + String(cpuRand)
+                    
+                    if(playerRand > cpuRand){
+                        playerScore += 1
+                    } else if(cpuRand > playerRand){
+                        cpuScore += 1
+                    }
+                }, label: {
+                    Image("dealbutton")
+                })
                 
                 Spacer()
                 
@@ -42,7 +63,7 @@ struct ContentView: View {
                             .font(.headline)
                             .foregroundColor(Color.white)
                             .padding(.bottom, 10)
-                        Text("0")
+                        Text(String(playerScore))
                             .font(.largeTitle)
                             .foregroundColor(Color.white)
                     }
@@ -52,7 +73,7 @@ struct ContentView: View {
                             .font(.headline)
                             .foregroundColor(Color.white)
                             .padding(.bottom, 10)
-                        Text("0")
+                        Text(String(cpuScore))
                             .font(.largeTitle)
                             .foregroundColor(Color.white)
                     }
